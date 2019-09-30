@@ -1,7 +1,7 @@
 # Residual-Leverage plot.
 
 # Creates a plot of the residuals versus leverage from a model
-plot_lev <- function(model, type, smoother, theme, axis.text.size, title.text.size, title.opt){
+plot_lev <- function(model, type, smoother, theme, axis.text.size, title.text.size, title.opt, color){
 
   ## Creation of Values to Plot -----------------------------------------------------
 
@@ -24,7 +24,7 @@ plot_lev <- function(model, type, smoother, theme, axis.text.size, title.text.si
                   theme = theme,
                   axis.text.size = axis.text.size,
                   title.text.size = title.text.size,
-                  title.opt = title.opt)
+                  title.opt = title.opt, color)
 
   } else {
 
@@ -103,6 +103,13 @@ plot_lev <- function(model, type, smoother, theme, axis.text.size, title.text.si
     Data <- helper_plotly_label(model)
     model_values$Data <- Data
 
+    # Get values for coloring
+    if(!is.null(color)){
+      color_data <- helper_plot_color(model)
+      model_values[, (ncol(model_values)+1)] <- color_data[, color]
+      names(model_values)[ncol(model_values)] <- color
+      
+    }
     ## Creation of Plot ---------------------------------------------------------------
 
     # Remove data points with leverage values equal to 1
@@ -113,7 +120,7 @@ plot_lev <- function(model, type, smoother, theme, axis.text.size, title.text.si
       labs(x = "Leverage", y = r_label) +
       expand_limits(x = 0) +
       geom_point(data = model_values,
-                 mapping = aes_string(x = "Leverage", y = "Std_Res", group = "Data"),
+                 mapping = aes_string(x = "Leverage", y = "Std_Res", group = "Data", color = color),
                  na.rm = TRUE) +
       geom_hline(yintercept = 0, linetype = "dashed") +
       geom_vline(xintercept = 0, linetype = "dashed") +

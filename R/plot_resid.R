@@ -2,7 +2,7 @@
 
 # Creates a residual plot with residuals versus predicted values from a model
 plot_resid <- function(model, type, smoother, theme, axis.text.size,
-                       title.text.size, title.opt){
+                       title.text.size, title.opt, color){
 
   ## Creation of Values to Plot -----------------------------------------------------
 
@@ -27,11 +27,18 @@ plot_resid <- function(model, type, smoother, theme, axis.text.size,
   # Create labels for plotly
   Data <- helper_plotly_label(model)
 
+  # Get data for coloring
+  if(!is.null(color)){
+    color_data <- helper_plot_color(model)
+    model_values[, (ncol(model_values)+1)] <- color_data[, color]
+    names(model_values)[ncol(model_values)] <- color
+  }
+  
   ## Creation of Plot ---------------------------------------------------------------
 
   # Create the residual plot
   plot <- ggplot(data = model_values,
-                 mapping = aes_string(x = "Prediction", y = "Residual", label = "Data")) +
+                 mapping = aes_string(x = "Prediction", y = "Residual", label = "Data", color = color)) +
     geom_point() +
     geom_abline(slope = 0, intercept = 0, color = "blue") +
     labs(x = "Predicted Values", y = r_label)

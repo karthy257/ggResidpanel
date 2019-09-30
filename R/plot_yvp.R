@@ -1,7 +1,7 @@
 # Response versus predicted plot.
 
 # Creates a plot of the response variable versus the predicted values
-plot_yvp <- function(model, theme, axis.text.size, title.text.size, title.opt){
+plot_yvp <- function(model, theme, axis.text.size, title.text.size, title.opt, color){
 
   ## Creation of Values to Plot -----------------------------------------------------
 
@@ -45,12 +45,20 @@ plot_yvp <- function(model, theme, axis.text.size, title.text.size, title.opt){
   # Create labels for plotly
   Data <- helper_plotly_label(model)
 
+  # Get data for coloring
+  
+  if(!is.null(color)){
+    color_data <- helper_plot_color(model)
+    model_values[, (ncol(model_values)+1)] <- color_data[, color]
+    names(model_values)[ncol(model_values)] <- color
+    
+  }
   ## Creation of Plot ---------------------------------------------------------------
 
 
   # Create the plot of response variable versus predicted values
   plot <- ggplot(data = model_values,
-                 mapping = aes_string(x = "Predicted", y = "Response", label = "Data")) +
+                 mapping = aes_string(x = "Predicted", y = "Response", label = "Data", color = color)) +
     geom_point() +
     geom_abline(slope = 1, intercept = 0, color = "blue") +
     labs(x = "Predicted Values", y = y_label)

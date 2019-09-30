@@ -2,7 +2,7 @@
 
 # Creates a location-scale plot with the square root of the standardized residuals
 # versus predicted values from a model
-plot_ls <- function(model, type, smoother, theme, axis.text.size, title.text.size, title.opt){
+plot_ls <- function(model, type, smoother, theme, axis.text.size, title.text.size, title.opt, color){
 
   ## Creation of Values to Plot -----------------------------------------------------
 
@@ -34,6 +34,13 @@ plot_ls <- function(model, type, smoother, theme, axis.text.size, title.text.siz
   # Create labels for plotly
   Data <- helper_plotly_label(model)
 
+  # Get data to use for coloring
+  if(!is.null(color)){
+    color_data <- helper_plot_color(model)
+    model_values[, (ncol(model_values)+1)] <- color_data[, color]
+    names(model_values)[ncol(model_values)] <- color
+    
+  }
   ## Creation of Plot ---------------------------------------------------------------
 
   # Create the location-scale plot - labels are adjusted based on the model type
@@ -41,7 +48,7 @@ plot_ls <- function(model, type, smoother, theme, axis.text.size, title.text.siz
 
     # Location-scale plot for lm model
     plot <- ggplot(data = model_values,
-                   mapping = aes_string(x = "Prediction", y = "Sqrt_Std_Res", label = "Data")) +
+                   mapping = aes_string(x = "Prediction", y = "Sqrt_Std_Res", label = "Data", color = color)) +
       geom_point() +
       labs(x = "Predicted Values", y = expression(sqrt(abs(" Standardized Residuals ")))) +
       expand_limits(y = 0)

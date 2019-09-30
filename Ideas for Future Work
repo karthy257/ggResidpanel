@@ -17,6 +17,10 @@ Katie's Tasks:
   - NOTE: if plotting a panel of four plots, nrow DOES NOT USE THIRD ROW when nrow = 3
 - round all values shown in interactive plots
   - Check resid and predicted
+  
+  NOTe: got an error when trying to build "Quitting from lines 62-77 (introduction.Rmd) 
+Error: processing vignette 'introduction.Rmd' failed with diagnostics:
+Evaluation error: there is no package called 'forcats'."
 
 - Completed:
   - Rounded data tooltip to 2 decimal places if a decimal is present in any of the numbers and the variable is numeric

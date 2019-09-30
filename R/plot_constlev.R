@@ -1,7 +1,7 @@
 # Residual-Leverage plot.
 
 # Creates a plot of the residuals versus leverage from a model
-plot_constlev <- function(model, type, theme, axis.text.size, title.text.size, title.opt){
+plot_constlev <- function(model, type, theme, axis.text.size, title.text.size, title.opt, color){
 
   ## Creation of Values to Plot -----------------------------------------------------
 
@@ -67,10 +67,17 @@ plot_constlev <- function(model, type, theme, axis.text.size, title.text.size, t
   Data <- helper_plotly_label(model)
   model_values$Data <- Data
 
+  # Get variable for coloring
+  if(!is.null(color)){
+    color_data <- helper_plot_color(model)
+    model_values[, (ncol(model_values)+1)] <- color_data[, color]
+    names(model_values)[ncol(model_values)] <- color
+    
+  }
   ## Creation of Plot ---------------------------------------------------------------
   # Create the constant leverage plot
 
-  plot <- ggplot(data = model_values, aes_string(x = "Variables", y = "Std_Res"), na.rm=TRUE) +
+  plot <- ggplot(data = model_values, aes_string(x = "Variables", y = "Std_Res", color = color), na.rm=TRUE) +
     geom_point(aes_string(group = "Data")) +
     geom_line(aes_string(x = "Lowess.x", y = "Lowess.y"), color = "red", size = 0.5)+
     geom_abline(slope = 0, intercept = 0, color = "blue", size = 0.5)+

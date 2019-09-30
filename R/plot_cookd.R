@@ -1,7 +1,7 @@
 # Cook's D Plot.
 
 # Creates a plot with the Cook's D values versus the observation number
-plot_cookd <- function(model, theme, axis.text.size, title.text.size, title.opt){
+plot_cookd <- function(model, theme, axis.text.size, title.text.size, title.opt, color){
 
   ## Creation of Values to Plot -----------------------------------------------------
 
@@ -20,11 +20,16 @@ plot_cookd <- function(model, theme, axis.text.size, title.text.size, title.opt)
 
   # Create labels for plotly
   Data <- helper_plotly_label(model)
-
+  if(!is.null(color)){
+    color_data <- helper_plot_color(model)
+    model_values[, (ncol(model_values)+1)] <- color_data[, color]
+    names(model_values)[ncol(model_values)] <- color
+    
+  }
   ## Creation of Plot ---------------------------------------------------------------
 
   # Create the Cook's D plot
-  plot <- ggplot(model_values, aes_string(x = "Obs", y = "CooksD", label = "Data")) +
+  plot <- ggplot(model_values, aes_string(x = "Obs", y = "CooksD", label = "Data", color = color)) +
     geom_point() +
     geom_segment(aes_string(xend = "Obs", yend = 0), color = "blue") +
     labs(x = "Observation", y = "COOK's D") +

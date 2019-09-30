@@ -183,7 +183,8 @@
 resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                         smoother = FALSE, qqline = TRUE, qqbands = FALSE,
                         scale = 1, theme = "bw", axis.text.size = 10,
-                        title.text.size = 12, title.opt = TRUE, nrow = NULL){
+                        title.text.size = 12, title.opt = TRUE, nrow = NULL,
+                        color = NULL){
 
   ## Errors and Warnings -------------------------------------------------------
 
@@ -198,6 +199,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
   theme <- check_theme(theme = theme)
   title.opt <- check_title(title.opt = title.opt)
   check_leverage(model = model, plots = plots)
+  color = check_color(color = color, model = model)
 
   ## Creation of plots ---------------------------------------------------------
 
@@ -219,14 +221,16 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt,
+                        color = color)
   } else if("all" %in% plots &
             !(class(model)[1] %in% c("lme", "lmerMod", "lmerModLmerTest", "glmerMod"))){
     cookd <- plot_cookd(model = model,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt,
+                        color = color)
   } else{
     cookd <- NULL
   }
@@ -252,7 +256,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt, color = color)
   } else{
     index <- NULL
   }
@@ -265,7 +269,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                     theme = theme,
                     axis.text.size = axis.text.size,
                     title.text.size = title.text.size,
-                    title.opt = title.opt)
+                    title.opt = title.opt, color = color)
   } else if("all" %in% plots &
             !(class(model)[1] %in% c("lme", "lmerMod", "lmerModLmerTest", "glmerMod"))){
     lev <- plot_lev(model = model,
@@ -274,7 +278,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                     theme = theme,
                     axis.text.size = axis.text.size,
                     title.text.size = title.text.size,
-                    title.opt = title.opt)
+                    title.opt = title.opt, color = color)
   } else{
     lev <- NULL
   }
@@ -287,7 +291,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                   theme = theme,
                   axis.text.size = axis.text.size,
                   title.text.size = title.text.size,
-                  title.opt = title.opt)
+                  title.opt = title.opt, color = color)
   } else if("all" %in% plots &
             !(class(model)[1] %in% c("lme", "lmerMod", "lmerModLmerTest", "glmerMod"))){
     ls <- plot_ls(model = model,
@@ -296,7 +300,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                   theme = theme,
                   axis.text.size = axis.text.size,
                   title.text.size = title.text.size,
-                  title.opt = title.opt)
+                  title.opt = title.opt, color = color)
   } else{
     ls <- NULL
   }
@@ -310,7 +314,8 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                   title.text.size = title.text.size,
                   title.opt = title.opt,
                   qqline = qqline,
-                  qqbands = qqbands)
+                  qqbands = qqbands,
+                  color = color)
   } else{
     qq <- NULL
   }
@@ -323,7 +328,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt, color = color)
   } else{
     resid <- NULL
   }
@@ -335,7 +340,7 @@ resid_panel <- function(model, plots = "default", type = NA, bins = 30,
                     theme = theme,
                     axis.text.size = axis.text.size,
                     title.text.size = title.text.size,
-                    title.opt = title.opt)
+                    title.opt = title.opt, color = color)
   } else{
     yvp <- NULL
   }

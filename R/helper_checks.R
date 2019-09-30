@@ -150,6 +150,41 @@ check_leverage <- function(model, plots){
 
 }
 
+
+# Return a warning if the color is not one of the X's specified in the model
+
+check_color <- function(color, model){
+  
+  if(!is.null(color)){
+    if(class(model)[1]%in%c("lm", "glm")){
+      #Get names of variables
+      names_data <- names(model$model)
+      
+      if(!(color%in%names_data[-1])){
+        color <- NULL
+        
+        warning("The color option was not specified correctly. 
+                It should be specified as one of the indpendent variables or X's in the model. 
+                Make sure the name uses the same case and spelling as specified in the model.")
+        
+      }
+    } else if (class(model)[1]%in%c("lmerMod", "lmerModLmerTest", "glmerMod")) {
+      names_data <- names(model@frame)
+      if(!(color%in%names_data[-1])){
+        color <- NULL
+        
+        warning("The color option was not specified correctly. 
+                It should be specified as one of the indpendent variables or X's in the model. 
+                Make sure the name uses the same case and spelling as specified in the model.")
+        
+      }
+    }
+  }
+  
+    return(color)
+}
+
+
 # Return a warning about choosing the number of bins if a histogram is included
 # and the number of bins has not been specified and return the default option if
 # not specified

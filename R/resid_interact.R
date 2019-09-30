@@ -57,7 +57,7 @@
 resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                            smoother = FALSE, qqline = TRUE, scale = 0.9,
                            theme = "bw", axis.text.size = 10, title.text.size = 12,
-                           title.opt = TRUE, nrow = NULL){
+                           title.opt = TRUE, nrow = NULL, color = NULL){
 
   ## Errors and Warnings -------------------------------------------------------
 

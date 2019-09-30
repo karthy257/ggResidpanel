@@ -1,7 +1,7 @@
 # Residual vs Index Plot.
 
 # Creates a residual vs index plot from a model
-plot_index <- function(model, type, smoother, theme, axis.text.size, title.text.size, title.opt){
+plot_index <- function(model, type, smoother, theme, axis.text.size, title.text.size, title.opt, color){
 
   ## Creation of Values to Plot -----------------------------------------------------
 
@@ -22,12 +22,20 @@ plot_index <- function(model, type, smoother, theme, axis.text.size, title.text.
 
   # Create labels for plotly
   Data <- helper_plotly_label(model)
-
+  
+  # Get data set to draw variable from it to apply color
+  if(!is.null(color)){
+    color_data <- helper_plot_color(model)
+    model_values[, (ncol(model_values)+1)] <- color_data[, color]
+    names(model_values)[ncol(model_values)] <- color
+    
+  }
+  
   ## Creation of Plot ---------------------------------------------------------------
 
   # Create the residual plot
   plot <- ggplot(data = model_values,
-                 mapping = aes_string(x = "Observation", y = "Residual", label = "Data")) +
+                 mapping = aes_string(x = "Observation", y = "Residual", label = "Data", color = color)) +
     geom_point() +
     geom_abline(slope = 0, intercept = 0, color = "blue") +
     labs(x = "Observation Number", y = r_label)

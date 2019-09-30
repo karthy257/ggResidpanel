@@ -160,22 +160,20 @@ check_color <- function(color, model){
       #Get names of variables
       names_data <- names(model$model)
       
-      if(!(color%in%names_data[-1])){
+      if(!(color%in%names_data)){
         color <- NULL
         
-        warning("The color option was not specified correctly. 
-                It should be specified as one of the indpendent variables or X's in the model. 
-                Make sure the name uses the same case and spelling as specified in the model.")
+        warning("The color option was not specified correctly. It should have the same case and spelling as 
+                specified in the model.")
         
       }
     } else if (class(model)[1]%in%c("lmerMod", "lmerModLmerTest", "glmerMod")) {
       names_data <- names(model@frame)
-      if(!(color%in%names_data[-1])){
+      if(!(color%in%names_data)){
         color <- NULL
         
-        warning("The color option was not specified correctly. 
-                It should be specified as one of the indpendent variables or X's in the model. 
-                Make sure the name uses the same case and spelling as specified in the model.")
+        warning("The color option was not specified correctly. It should have the same case and spelling as 
+                specified in the model.")
         
       }
     }

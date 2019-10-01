@@ -71,6 +71,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
   smoother <- check_smoother(smoother = smoother)
   theme <- check_theme(theme = theme)
   title.opt <- check_title(title.opt = title.opt)
+  color = check_color(color = color, model = model)
   check_leverage(model = model, plots = plots)
 
   ## Creation of plot ---------------------------------------------------------
@@ -102,7 +103,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(cookd)
       cookd <- style(ggplotly(cookd, tooltip = c("CooksD", "Data")), hoverinfo = "skip", traces = 2) %>%
@@ -117,7 +118,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(cookd)
       cookd <- ggplotly(cookd, tooltip = c("CooksD", "Data")) %>%
@@ -157,7 +158,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(index)
       index <- ggplotly(index, tooltip = c("Observation", "Residual", "Data")) %>%
@@ -177,7 +178,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                     theme = theme,
                     axis.text.size = axis.text.size,
                     title.text.size = title.text.size,
-                    title.opt = title.opt)
+                    title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(lev)
       lev <- suppressWarnings(style(ggplotly(lev, tooltip = c("Leverage", "Std_Res", "Data")), hoverinfo = "skip", traces = c(6))) %>%
@@ -192,7 +193,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                     theme = theme,
                     axis.text.size = axis.text.size,
                     title.text.size = title.text.size,
-                    title.opt = title.opt)
+                    title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(lev)
       lev <- suppressWarnings(ggplotly(lev, tooltip = c("Leverage", "Std_Res")) %>%
@@ -212,7 +213,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                   theme = theme,
                   axis.text.size = axis.text.size,
                   title.text.size = title.text.size,
-                  title.opt = title.opt)
+                  title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(ls)
       if (class(model)[1] == "lm"){
@@ -251,7 +252,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                   theme = theme,
                   axis.text.size = axis.text.size,
                   title.text.size = title.text.size,
-                  title.opt = title.opt)
+                  title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(ls)
       if (class(model)[1] == "lm"){
@@ -296,7 +297,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                   title.text.size = title.text.size,
                   title.opt = title.opt,
                   qqline = qqline,
-                  qqbands = FALSE)
+                  qqbands = FALSE, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(qq)
       qq <- ggplotly(qq, tooltip = c("Data", "Residual", "Theoretical")) %>%
@@ -316,7 +317,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                         theme = theme,
                         axis.text.size = axis.text.size,
                         title.text.size = title.text.size,
-                        title.opt = title.opt)
+                        title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(resid)
       resid <- ggplotly(resid, tooltip = c("Prediction", "Residual", "Data")) %>%
@@ -334,7 +335,7 @@ resid_interact <- function(model, plots = "default", type = NA, bins = 30,
                     theme = theme,
                     axis.text.size = axis.text.size,
                     title.text.size = title.text.size,
-                    title.opt = title.opt)
+                    title.opt = title.opt, color = color)
     if(title.opt == TRUE){
       title = helper_plotly_title(yvp)
       yvp <- ggplotly(yvp) %>%

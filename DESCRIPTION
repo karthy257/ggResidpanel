@@ -20,6 +20,8 @@ Imports:
   qqplotr,
   stats,
   stringr
+Remotes: 
+  goodekat/redres
 RoxygenNote: 6.1.1
 Suggests: 
   dplyr,
